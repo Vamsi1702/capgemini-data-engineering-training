@@ -1,0 +1,43 @@
+# 1. Total order amount for each customer
+    total_spend = orders.groupBy("customer_id") \
+    .sum("amount") \
+    .withColumnRenamed("sum(amount)", "total_amount").show()
+
+    total_spend.show()
+# 2. Top 3 customers by total spend
+top_customers = total_spend.orderBy(desc("total_amount")).limit(3)
+
+top_customers.show()
+# 3. Customers with no orders
+customers_no_orders = customers.join(
+    orders,
+    customers.customer_id == orders.customer_id,
+    "left_anti"
+)
+
+customers_no_orders.show()
+# 4. City-wise total revenue
+city_revenue = customers.join(orders, "customer_id") \
+    .groupBy("city") \
+    .sum("amount") \
+    .withColumnRenamed("sum(amount)", "total_revenue")
+
+city_revenue.show()
+# 5. Average order amount per customer
+avg_order = orders.groupBy("customer_id") \
+    .avg("amount") \
+    .withColumnRenamed("avg(amount)", "avg_amount")
+
+avg_order.show()
+
+# 6. Customers with more than one order
+multiple_orders = orders.groupBy("customer_id") \
+    .agg(count("*").alias("order_count")) \
+    .filter("order_count > 1")
+
+multiple_orders.show()
+
+# 7. Sort customers by total spend descending
+sorted_customers = total_spend.orderBy(desc("total_amount"))
+
+sorted_customers.show()
