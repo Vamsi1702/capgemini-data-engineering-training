@@ -1,0 +1,19 @@
+# Query 1: Show all customers
+# SQL: SELECT * FROM customers
+customers.show()
+
+# Query 2: Customers from Chennai
+# SQL: SELECT * FROM customers WHERE city = 'Chennai'
+customers.filter(customers.city == "Chennai").show()
+
+# Query 3: Customers with age > 25
+# SQL: SELECT * FROM customers WHERE age > 25
+customers.filter(customers.age > 25).show()
+
+# Query 4: Only customer_name and city
+# SQL: SELECT customer_name, city FROM customers
+customers.select("customer_name", "city").show()
+
+# Query 5: Count customers city-wise
+# SQL: SELECT city, COUNT(*) as customer_count FROM customers GROUP BY city
+customers.groupBy("city").agg(count("*").alias("customer_count")).show()
