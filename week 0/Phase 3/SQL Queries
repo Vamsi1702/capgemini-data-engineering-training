@@ -1,1 +1,77 @@
+-- ============================================
+-- Phase 3 - PySpark ETL Pipeline
+-- SQL Queries for all 5 Exercises
+-- ============================================
 
+
+-- Exercise 1 - Daily Sales Total
+-- Question: How much total revenue was generated each day?
+
+SELECT sale_date,
+       SUM(total_amount) AS daily_total
+FROM sales
+WHERE total_amount > 0
+GROUP BY sale_date
+ORDER BY sale_date;
+
+
+-- ============================================
+
+
+-- Exercise 2 - City Wise Revenue
+--  Question: Which city is generating the most revenue?
+
+SELECT c.city,
+       SUM(s.total_amount) AS city_revenue
+FROM sales s
+JOIN customers c
+ON s.customer_id = c.customer_id
+GROUP BY c.city
+ORDER BY city_revenue DESC;
+
+
+-- ============================================
+
+
+-- Exercise 3 - Repeat Customers
+--  Question: Which customers have placed more than 2 orders?
+
+SELECT customer_id,
+       COUNT(sale_id) AS order_count
+FROM sales
+GROUP BY customer_id
+HAVING order_count > 2;
+
+
+-- ============================================
+
+
+-- Exercise 4 - Highest Spending Customer Per City
+--  Question: In each city who spent the most money?
+
+SELECT c.city,
+       c.customer_id,
+       SUM(s.total_amount) AS total_spent
+FROM customers c
+JOIN sales s
+ON c.customer_id = s.customer_id
+GROUP BY c.city, c.customer_id
+ORDER BY c.city, total_spent DESC;
+
+
+-- ============================================
+
+
+-- Exercise 5 - Final Reporting Table
+--  Question: Complete report with customer name, city, total spent and order count
+
+SELECT c.customer_id,
+       c.first_name,
+       c.city,
+       SUM(s.total_amount) AS total_spent,
+       COUNT(s.sale_id) AS order_count
+FROM customers c
+JOIN sales s
+ON c.customer_id = s.customer_id
+GROUP BY c.customer_id, c.first_name, c.city
+ORDER BY total_spent DESC;
