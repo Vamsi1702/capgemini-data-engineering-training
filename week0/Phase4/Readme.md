@@ -1,12 +1,12 @@
-# 📊 Phase 4 — Mini Project: Business Pipeline & Analytics  
+# Phase 4 — Mini Project: Business Pipeline & Analytics  
 **Capgemini Data Engineering Training — Week 0, Phase 4**
 
-## 🚀 Project Overview  
+## Project Overview  
 In this phase, I built an end-to-end business data pipeline using **PySpark**. The workflow includes data loading, cleaning, transformation, joining, and saving to generate business insights. The project was developed using Spark Playground.
 
 ---
 
-## 📁 Datasets Used  
+## Datasets Used  
 
 | Dataset        | Description |
 |----------------|------------|
@@ -15,7 +15,7 @@ In this phase, I built an end-to-end business data pipeline using **PySpark**. T
 
 ---
 
-## 🛠️ Technologies Used  
+## Technologies Used  
 - PySpark  
 - Spark SQL  
 - Spark Playground  
@@ -23,7 +23,7 @@ In this phase, I built an end-to-end business data pipeline using **PySpark**. T
 
 ---
 
-## 🔄 ETL Pipeline Structure  
+## ETL Pipeline Structure  
 
 ### Extract  
 Loaded datasets from `/samples/` into DataFrames and explored schema using `show()` and `printSchema()`.
@@ -38,7 +38,7 @@ Saved final output to `/tmp/report` in CSV format using overwrite mode.
 
 ---
 
-## 📌 Tasks Completed  
+## Tasks Completed  
 
 | Task | Business Question | Output |
 |------|------------------|--------|
@@ -52,7 +52,7 @@ Saved final output to `/tmp/report` in CSV format using overwrite mode.
 
 ---
 
-## 📚 New Concepts Learned  
+## New Concepts Learned  
 
 | Concept | Learning |
 |--------|---------|
@@ -65,7 +65,7 @@ Saved final output to `/tmp/report` in CSV format using overwrite mode.
 
 ---
 
-## ⚠️ Difficulties Faced  
+## Difficulties Faced  
 - Confusion in JOIN usage → used only when data is in multiple tables  
 - `sum` vs `_sum` conflict → resolved using alias  
 - Write errors → `/samples` is read-only, used `/tmp`  
@@ -74,7 +74,7 @@ Saved final output to `/tmp/report` in CSV format using overwrite mode.
 
 ---
 
-## 🎯 Key Learnings  
+## Key Learnings  
 - Built a complete ETL pipeline from raw data to final output  
 - Learned joins, aggregations, and conditional transformations  
 - Understood importance of data cleaning before processing  
@@ -83,5 +83,5 @@ Saved final output to `/tmp/report` in CSV format using overwrite mode.
 
 ---
 
-## 🏁 Conclusion  
+## Conclusion  
 This project demonstrates how real-world data pipelines are built and used to generate business insights through structured data processing.
