@@ -1,1 +1,65 @@
+#phase 4
+#Task 1
+daily_sales = sales_df \
+    .groupBy("sale_date") \
+    .agg(_sum("total_amount").alias("daily_total")) \
+    .orderBy("sale_date")
+daily_sales.show()
 
+#Task 2
+df = customers_df\
+    .join(sales_df, on="customer_id", how="inner")\
+    .groupBy("city")\
+    .agg(_sum("total_amount").alias("total_revenue"))\
+    .orderBy("total_revenue", ascending=False)
+df.show()
+
+#Task 3
+df = customers_df\
+    .join(sales_df, on="customer_id", how="inner")\
+    .groupBy("first_name")\
+    .agg(_sum("total_amount").alias("total_spend"))\
+    .orderBy("total_spend", ascending=False)\
+    .limit(5)
+df.show()
+
+from pyspark.sql.functions import count, col
+#task 4
+task4 = sales_df\
+    .groupBy("customer_id")\
+    .agg(count("sale_id").alias("order_count"))\
+    .filter(col("order_count") > 1)\
+    .orderBy("order_count", ascending=False)
+task4.show()
+
+#task 5
+from pyspark.sql.functions import when
+task5 = sales_df\
+    .join(customers_df, on="customer_id", how="inner")\
+    .groupBy("first_name")\
+    .agg(_sum("total_amount").alias("total_spend"))\
+    .withColumn("segment",
+        when(col("total_spend") > 10000, "Gold")
+        .when(col("total_spend") >= 5000, "Silver")
+        .otherwise("Bronze")
+    )
+task5.show()
+#task 6
+task6 = sales_df\
+    .join(customers_df, on="customer_id", how="inner")\
+    .groupBy("customer_id", "first_name", "city")\
+    .agg(
+        _sum("total_amount").alias("total_spend"),
+        count("sale_id").alias("order_count")
+    )\
+    .withColumn("segment",
+        when(col("total_spend") > 10000, "Gold")
+        .when(col("total_spend") >= 5000, "Silver")
+        .otherwise("Bronze")
+    )\
+    .orderBy("total_spend", ascending=False)
+task6.show()
+
+#task 7
+task6.write.mode("overwrite").csv("/tmp/report")
+print("File saved successfully!")
